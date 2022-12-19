@@ -7,6 +7,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/niiket/Sample/numerus"
 )
 
 type Data struct {
@@ -95,10 +97,8 @@ func (d *Data) GetСalc() (string, error) {
 		if res <= 0 {
 			return "", errors.New("Ошибка: Результ операции с Римскими цифрами может быть только положительным.")
 		}
-		result, err = parseArabicToRomanNumeric(res)
-		if err != nil {
-			return "", err
-		}
+
+		result = numerus.Numeral(res).String()
 	} else {
 		result = strconv.Itoa(res)
 	}
@@ -135,35 +135,6 @@ func parsePomanToArabicNumeric(a string) (int, error) {
 	return val, nil
 }
 
-func parseArabicToRomanNumeric(a int) (string, error) {
-	var val string
-	switch a {
-	case 1:
-		val = "I"
-	case 2:
-		val = "II"
-	case 3:
-		val = "III"
-	case 4:
-		val = "IV"
-	case 5:
-		val = "V"
-	case 6:
-		val = "VI"
-	case 7:
-		val = "VII"
-	case 8:
-		val = "VIII"
-	case 9:
-		val = "IX"
-	case 10:
-		val = "X"
-	default:
-		return "", errors.New("Ошибка: Калькулятор не работает с данным диапозоном чисел !")
-	}
-	return val, nil
-}
-
 func main() {
 
 	retriev := bufio.NewScanner(os.Stdin)
@@ -171,7 +142,7 @@ func main() {
 	temp := retriev.Text()
 	temp = strings.TrimSpace(temp)
 	example := strings.Split(temp, " ")
-	fmt.Println(example)
+
 	if len(example) > 3 {
 		fmt.Println("Ошибка: Формат математической операции не удовлетворяет заданию — два операнда и один оператор.")
 		os.Exit(0)
