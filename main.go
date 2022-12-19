@@ -73,6 +73,10 @@ func (d *Data) GetСalc() (string, error) {
 			return "", err
 		}
 
+		if a > 10 || b > 10 {
+			return "", errors.New("Ошибка: Калькулятор не работает с данным диапозоном чисел.")
+		}
+
 	} else {
 		a, err = parsePomanToArabicNumeric(d.A)
 		if err != nil {
@@ -97,7 +101,6 @@ func (d *Data) GetСalc() (string, error) {
 		if res <= 0 {
 			return "", errors.New("Ошибка: Результ операции с Римскими цифрами может быть только положительным.")
 		}
-
 		result = numerus.Numeral(res).String()
 	} else {
 		result = strconv.Itoa(res)
@@ -136,7 +139,7 @@ func parsePomanToArabicNumeric(a string) (int, error) {
 }
 
 func main() {
-
+	fmt.Print("Диапозон чисел от 1 до 10")
 	retriev := bufio.NewScanner(os.Stdin)
 	retriev.Scan()
 	temp := retriev.Text()
@@ -144,7 +147,7 @@ func main() {
 	example := strings.Split(temp, " ")
 
 	if len(example) > 3 {
-		fmt.Println("Ошибка: Формат математической операции не удовлетворяет заданию — два операнда и один оператор.")
+		fmt.Println("Ошибка: Формат математической операции не удовлетворяет условию — два операнда и один оператор.")
 		os.Exit(0)
 	}
 
